@@ -54,6 +54,16 @@
 }
 #pc[data-open="0"] #pc-panel { transform: translateX(100%); width: 0; border: 0; box-shadow: none; }
 #pc[data-open="0"] #pc-panel > * { display: none; }
+/* The tab is the handle for opening. Once the rail is open the header's ×
+   is the way out, so the tab is only an artifact floating over the page. */
+#pc[data-open="1"] #pc-tab { display: none; }
+
+/* An open rail makes room rather than sitting on top of the plan. The script
+   sets --pc-shift; anything that wants to stay clear of the rail reads it. */
+body { margin-inline-end: var(--pc-shift, 0px); }
+@media (prefers-reduced-motion: no-preference) {
+  body { transition: margin-inline-end .26s cubic-bezier(.22,.61,.36,1); }
+}
 
 #pc-head {
   display: flex; align-items: baseline; gap: 10px;
@@ -193,6 +203,9 @@
 [data-pc-changed] {
   outline: 2px solid var(--accent, var(--amber, #9A6B1E));
   outline-offset: 3px; border-radius: 6px;
+  /* Scene cards usually clip their own header; the marker sits above the top
+     edge, so it needs the card to stop clipping for the few seconds it shows. */
+  overflow: visible !important;
 }
 [data-pc-changed]::after {
   content: "changed just now";
@@ -208,5 +221,5 @@
 @media (max-width: 720px) {
   #pc { --pc-w: 100vw; }
   #pc-panel { box-shadow: none; }
-  #pc[data-open="1"] #pc-tab { display: none; }
+  body { margin-inline-end: 0 !important; }
 }

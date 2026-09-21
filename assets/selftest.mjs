@@ -160,6 +160,21 @@ export async function selftest({ live, serverPath }) {
       .filter(Boolean).filter(l => !l.includes('.plan-chat'));
     ok('nothing outside the plan is left dirty', dirtyNow.length === 0, dirtyNow.join(' | '));
 
+    /* ── a concurrent edit elsewhere in the repo must not poison a turn ── */
+    // Regression: the backstop used to diff the whole working tree, so anyone
+    // editing this repo in another window while a turn ran had their change
+    // blamed on the worker and the turn rolled back.
+    const bystander = path.join(dir, 'NOTES.md');
+    fs.writeFileSync(bystander, 'edited by a human, mid-turn\n');
+    const t4 = await turn(base, sink, live
+      ? 'Change the deck to end with the word "loops." Nothing else.'
+      : 'another good one');
+    ok('a concurrent edit elsewhere does not poison the turn', t4.ev === 'done',
+      JSON.stringify(t4.data).slice(0, 240));
+    ok('the bystander edit was left alone',
+      fs.existsSync(bystander) && fs.readFileSync(bystander, 'utf8').includes('mid-turn'));
+    fs.rmSync(bystander, { force: true });
+
     /* ── revert ───────────────────────────────────────────────── */
     const rev = await fetch(`${base}/__plan/revert`, {
       method: 'POST', headers: { 'content-type': 'application/json' },

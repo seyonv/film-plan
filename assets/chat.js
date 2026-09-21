@@ -63,11 +63,17 @@
   const pillWhat = pill.querySelector('.what');
 
   /* ── open / close ────────────────────────────────────────────── */
+  const narrow = () => matchMedia('(max-width: 720px)').matches;
   const setOpen = on => {
     root.dataset.open = on ? '1' : '0';
+    // Push the page over rather than covering it. On a narrow screen the rail
+    // is a full-width sheet, so there is nothing to push.
+    document.documentElement.style.setProperty('--pc-shift',
+      on && !narrow() ? getComputedStyle(root).getPropertyValue('--pc-w').trim() || '0px' : '0px');
     if (on) { root.dataset.unread = '0'; input.focus(); }
     try { localStorage.setItem('pc-open', on ? '1' : '0'); } catch {}
   };
+  addEventListener('resize', () => setOpen(root.dataset.open === '1'));
   el('pc-tab').onclick = () => setOpen(root.dataset.open === '0');
   el('pc-close').onclick = () => setOpen(false);
   for (const b of document.querySelectorAll('#pc-tabs button')) {

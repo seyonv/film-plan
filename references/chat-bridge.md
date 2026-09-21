@@ -32,9 +32,11 @@ page perfectly; the rail simply is not there.
    and a `PreToolUse` hook (`guard.mjs`) that refuses any write outside the two
    plan files and the worker's own turn report.
 3. Stream the worker's tool calls to the page as the live status line.
-4. **Backstop** — anything outside the two files that moved gets restored,
-   tracked or not, and the turn fails. The hook is configuration and
-   configuration drifts; the working tree is what can actually be proven.
+4. **Backstop** — if the worker's own tool stream shows it writing anywhere
+   outside the two files, that write is undone and the turn fails. The hook is
+   configuration and configuration drifts, so this is the second line.
+   Attribution comes from the stream rather than from a working-tree diff, so
+   editing the repo in another window while a turn runs does not poison it.
 5. **Gate** — the checks in `anatomy.md`. Any failure restores the snapshot.
 6. **Commit** — the server commits, not the worker, and only those two files,
    with a `Plan-Turn: <id>` trailer and no attribution lines.
@@ -82,6 +84,7 @@ the way it is.
 | every turn fails the gate | the plan was already invalid — run the server and read the boot output |
 | worker will not start | `claude` is not on the server's `PATH` |
 | turn does nothing, summary explains why | working as intended: the worker read its brief and declined |
+| a turn was refused for touching a file you edited | you edited it *through the worker*; your own concurrent edits elsewhere are ignored |
 | commit failed but the edit stuck | git refused — no identity, or a pre-commit hook. The rail says so |
 
 Set `PLAN_WORKER_CMD` to point the bridge at something other than `claude` —

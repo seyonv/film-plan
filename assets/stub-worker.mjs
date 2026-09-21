@@ -19,6 +19,9 @@ if (prompt.includes('SELFTEST-BREAK')) {
   fs.writeFileSync(turnFile, JSON.stringify({ summary: 'Redrew the frame.', changes: [{ scene: 'cold-open', field: 'art', note: 'redrew' }] }));
 } else if (prompt.includes('SELFTEST-STRAY')) {
   const html = path.join(path.dirname(data), 'plan.html');
+  // Announce it the way a real worker does — every write goes through a tool,
+  // which is what the backstop attributes by.
+  tool('Write', html);
   fs.writeFileSync(html, fs.readFileSync(html, 'utf8') + '\n<!-- reached outside -->\n');
   fs.writeFileSync(turnFile, JSON.stringify({ summary: 'Restyled the page.', changes: [] }));
 } else {

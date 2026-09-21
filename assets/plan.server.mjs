@@ -250,6 +250,22 @@ function composePrompt(turn) {
     .replaceAll('{{MESSAGE}}', turn.message);
 }
 
+const WRITE_TOOLS = new Set(['Edit', 'Write', 'MultiEdit', 'NotebookEdit']);
+
+/** Every path this event shows the worker writing to. */
+function writeTargets(evt) {
+  const out = [];
+  try {
+    if (evt.type !== 'assistant') return out;
+    for (const block of evt.message?.content ?? []) {
+      if (block.type !== 'tool_use' || !WRITE_TOOLS.has(block.name)) continue;
+      const f = block.input?.file_path ?? block.input?.notebook_path ?? block.input?.path;
+      if (f) out.push(real(path.isAbsolute(f) ? f : path.resolve(REPO_ROOT ?? PLAN_DIR, f)));
+    }
+  } catch {}
+  return out;
+}
+
 function describeActivity(evt) {
   try {
     if (evt.type === 'assistant') {
@@ -291,6 +307,7 @@ function runWorker(turn) {
     });
 
     let buf = '', stderr = '';
+    const touched = new Set();
     child.stdout.on('data', chunk => {
       buf += chunk;
       const lines = buf.split('\n');
@@ -298,13 +315,14 @@ function runWorker(turn) {
       for (const line of lines) {
         if (!line.trim()) continue;
         let evt; try { evt = JSON.parse(line); } catch { continue; }
+        for (const f of writeTargets(evt)) touched.add(f);
         const note = describeActivity(evt);
         if (note) broadcast('activity', { turnId: turn.id, note });
       }
     });
     child.stderr.on('data', d => { stderr += d; });
-    child.on('error', e => resolve({ ok: false, stderr: `could not start the worker (${bin}): ${e.message}` }));
-    child.on('close', code => resolve({ ok: code === 0, code, stderr: stderr.trim(), sessionId: sid }));
+    child.on('error', e => resolve({ ok: false, touched, stderr: `could not start the worker (${bin}): ${e.message}` }));
+    child.on('close', code => resolve({ ok: code === 0, code, touched, stderr: stderr.trim(), sessionId: sid }));
   });
 }
 
@@ -340,7 +358,6 @@ function fail(turn, reason, detail) {
 async function runTurn(turn) {
   broadcast('working', { turnId: turn.id, note: 'thinking' });
   snapshot(turn.id);
-  const before = new Set(statusEntries().map(e => e.file));
 
   const run = await runWorker(turn);
   if (!run.ok) {
@@ -350,21 +367,23 @@ async function runTurn(turn) {
 
   broadcast('working', { turnId: turn.id, note: 'checking the plan still holds' });
 
-  // Backstop. The guard hook should already have stopped this, but the hook is
-  // config and config drifts; the working tree is the thing we can actually
-  // prove. Anything that moved outside the two plan files gets put back.
-  if (IS_REPO()) {
-    const strays = statusEntries().filter(e =>
-      !EDITABLE.includes(e.file) && !e.file.startsWith(P.state + path.sep) && !before.has(e.file));
-    if (strays.length) {
-      const untracked = strays.filter(e => e.code === '??').map(e => e.file);
-      const tracked = strays.filter(e => e.code !== '??').map(e => e.file);
-      if (tracked.length) git('checkout', '--', ...tracked);
-      for (const f of untracked) { try { fs.rmSync(f, { recursive: true, force: true }); } catch {} }
-      restoreSnapshot(turn.id);
-      return fail(turn, 'That edit reached outside the plan data and art, so I put everything back.',
-        strays.map(e => path.relative(REPO_ROOT, e.file)).join(', '));
+  // Backstop. The guard hook should already have refused these, but the hook is
+  // configuration and configuration drifts. Attribution comes from the worker's
+  // own tool stream rather than from a working-tree diff: someone editing this
+  // repo in another window while a turn runs must not poison the turn.
+  const strays = [...run.touched].filter(f =>
+    !EDITABLE.includes(f) && !f.startsWith(P.state + path.sep));
+  if (strays.length) {
+    if (IS_REPO()) {
+      const byPath = new Map(statusEntries().map(e => [e.file, e.code]));
+      for (const f of strays) {
+        if (byPath.get(f) === '??') { try { fs.rmSync(f, { recursive: true, force: true }); } catch {} }
+        else if (byPath.has(f)) git('checkout', '--', f);
+      }
     }
+    restoreSnapshot(turn.id);
+    return fail(turn, 'That edit reached outside the plan data and art, so I put everything back.',
+      strays.map(f => path.relative(REPO_ROOT ?? PLAN_DIR, f)).join(', '));
   }
 
   const check = validate();
