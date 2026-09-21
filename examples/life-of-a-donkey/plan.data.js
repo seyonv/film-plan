@@ -49,7 +49,7 @@ window.PLAN = {
  title:'I. Fish',
  artCap:'Three hands fold away from the pot · his chip goes in alone',
  what:'<b>The table frame, established.</b> Three human hands fold in turn — cards flicked away, decisive, on consecutive beats. He hesitates: ears swivel, he lifts his cards and checks them a second time. Then his hoof pushes chips forward, <b>alone</b>. Stack 22, drink full, coat clean.',
- beats:[['6.5','Hand A folds — cards flicked away'],['7.0','Hand B folds'],['7.5','Hand C folds'],['8.2','He hesitates — ears swivel, he checks his cards again'],['9.0','His chip goes in. Alone.']],
+ beats:[['6.5','Hand A folds — cards flicked away'],['7.0','Hand B folds'],['7.5','Hand C folds'],['8.2','He hesitates — ears swivel, he checks his cards again'],['9.0','His chip goes in. Alone.'],['9.3–10.0','Held. One chip in an empty pot; nobody follows it in.']],
  narr:[['6.8','His first night.'],['7.6','He does not yet know which hands to fold.'],['8.9','Observe. The others withdraw. He does not.']],
  why:'<strong>Changed from the approved plan.</strong> Reusing the limp shot said “everyone played a hand, including him” — the opposite of not understanding. Three decisive folds against one hesitant call is what makes a fish a fish.'},
 
