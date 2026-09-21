@@ -42,7 +42,7 @@ window.PLAN = {
  artCap:'Three bands · the five-stage ring previewed along the bottom',
  what:'The animal in left profile reduced to amber line on navy. Shoulder cross bracketed and measured at the withers, ear angle ticked, proportions called against a shared scale. In the bottom third, <b>five stage roundels light left to right</b> — the shape of the film, laid out before it runs.',
  beats:[['3.6','Ear-angle arcs sweep on'],['4.2','The shoulder cross measured — magenta flash at the intersection'],['5.0','Five roundels light in sequence on 16ths']],
- narr:[['3.4','Asinus pokerensis.'],['4.6','Five stages. He will pass through every one.']],
+ narr:[['3.4','Asinus pokerensis.'],['5.5','Five stages. He will pass through every one.']],
  why:'The caption does what two seconds of silent roundels could not: it tells the audience the film <strong>has a structure</strong> and that they should be counting.'},
 
 {n:3,id:'stage-fish',t:'6.0 – 10.0',dur:'4.0 s',plate:'p',status:['redo','re-choreograph from the-limp · folds, not limps'],
