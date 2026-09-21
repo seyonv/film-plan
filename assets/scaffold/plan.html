@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Working Title — Storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   THE TOKEN CONTRACT. Restyle the film by restyling these eight lines.
+   The chat rail reads them too, so it never looks bolted on.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --paper:#FBF8F2;                  /* page ground */
+  --card:#FFFFFF;                   /* raised surface */
+  --sunk:#F3EDE2;                   /* recessed surface */
+  --ink:#241C14;                    /* primary text */
+  --ink-2:#5A4A39;                  /* secondary text */
+  --ink-3:#8D7B65;                  /* labels, metadata */
+  --rule:rgba(36,28,20,.13);        /* hairlines */
+  --accent:#9A6B1E;                 /* the one loud colour */
+
+  --rule-2:rgba(36,28,20,.26);
+  --accent-bg:rgba(154,107,30,.10);
+  --new:#6F3B7D; --keep:#2E6B4A; --redo:#96631A;
+  --shadow:0 1px 2px rgba(36,28,20,.05),0 6px 18px rgba(36,28,20,.05);
+  --pc-serif:Spectral,Georgia,serif;
+  --pc-sans:Archivo,system-ui,sans-serif;
+  --pc-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--pc-sans);font-size:16px;line-height:1.6}
+h1,h2,h3{font-family:var(--pc-serif);font-weight:600;line-height:1.16;text-wrap:balance}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:40px 120px}
+p{max-width:64ch}
+
+/* ── sticky ribbon with the scrubber strip ─────────────────────── */
+.ribbon{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 93%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);padding:10px 20px 11px}
+.ribbon-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ribbon .t{font-family:var(--pc-serif);font-weight:600;font-size:15px;white-space:nowrap}
+.strip{display:flex;gap:2px;flex:1 1 360px;min-width:260px}
+.strip a{flex:1 1 0;min-width:6px;height:22px;border-radius:2px;position:relative;display:block;text-decoration:none;border:1px solid transparent}
+.strip a.a{background:#E8D9B8}
+.strip a.b{background:#3B4A7A}
+.strip a:hover,.strip a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.strip a span{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--pc-mono);font-size:9px;color:rgba(36,28,20,.55)}
+.strip a.b span{color:rgba(255,255,255,.72)}
+.btn{font-family:var(--pc-mono);font-size:11px;letter-spacing:.06em;border:1px solid var(--rule-2);
+  background:var(--card);color:var(--ink);padding:6px 11px;border-radius:3px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--sunk)}
+.btn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ── masthead ──────────────────────────────────────────────────── */
+.eyebrow{font-family:var(--pc-mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);margin:34px 0 10px}
+h1{font-size:clamp(32px,5.6vw,50px);margin:0 0 8px;letter-spacing:-.012em}
+.deck{font-family:var(--pc-serif);font-size:clamp(17px,2.2vw,20px);color:var(--ink-2);max-width:60ch;margin:0 0 22px;line-height:1.5}
+.facts{display:flex;flex-wrap:wrap;gap:7px;padding:0;margin:0 0 34px;list-style:none}
+.facts li{font-family:var(--pc-mono);font-size:12px;color:var(--ink-2);background:var(--card);
+  border:1px solid var(--rule);border-radius:3px;padding:5px 9px}
+.facts li.hot{color:var(--accent);border-color:var(--accent);background:var(--accent-bg)}
+
+/* ── act band ──────────────────────────────────────────────────── */
+.act{margin:46px 0 22px;padding:16px 18px;background:var(--sunk);border-radius:4px;border-left:3px solid var(--accent)}
+.act h2{margin:0 0 3px;font-size:22px}
+.act .meta{font-family:var(--pc-mono);font-size:12px;color:var(--ink-3)}
+.act p{margin:8px 0 0;font-size:14.5px;color:var(--ink-2)}
+
+/* ── scene card ────────────────────────────────────────────────── */
+.scene{background:var(--card);border:1px solid var(--rule);border-radius:6px;box-shadow:var(--shadow);
+  margin:0 0 20px;overflow:hidden;scroll-margin-top:84px}
+.sc-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--rule)}
+.sc-no{font-family:var(--pc-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:4px 9px;border-radius:3px;white-space:nowrap}
+.sc-title{font-family:var(--pc-serif);font-weight:600;font-size:20px;flex:1 1 220px;min-width:0}
+.sc-tc{font-family:var(--pc-mono);font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{font-family:var(--pc-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 7px;border-radius:3px;border:1px solid;white-space:nowrap}
+.tag.a{color:#8A6420;border-color:#C9A86A;background:#FBF3E2}
+.tag.b{color:#2F4577;border-color:#8FA8DE;background:#EEF2FB}
+.tag.new{color:var(--new);border-color:var(--new)}
+.tag.keep{color:var(--keep);border-color:var(--keep)}
+.tag.redo{color:var(--redo);border-color:var(--redo)}
+.sc-body{display:grid;grid-template-columns:186px 1fr;gap:20px;padding:18px}
+.board{position:sticky;top:96px}
+.board svg{width:100%;height:auto;display:block;border-radius:3px;border:1px solid var(--rule-2)}
+.board .cap{font-family:var(--pc-mono);font-size:10px;color:var(--ink-3);margin-top:7px;text-align:center;line-height:1.45}
+.lbl{font-family:var(--pc-mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
+.block{margin:0 0 18px}
+.block:last-child{margin-bottom:0}
+.block p{margin:0}
+.narr{background:var(--sunk);border-radius:4px;padding:13px 15px;border-left:2px solid var(--accent)}
+.narr .line{display:flex;gap:11px;align-items:baseline;padding:4px 0}
+.narr .line+.line{border-top:1px dotted var(--rule)}
+.narr .at{font-family:var(--pc-mono);font-size:11px;color:var(--ink-3);min-width:38px;font-variant-numeric:tabular-nums}
+.narr .txt{font-family:var(--pc-serif);font-size:16.5px;font-style:italic}
+.narr.silent .txt{font-style:normal;color:var(--ink-3);font-size:15px}
+.beats{list-style:none;margin:0;padding:0}
+.beats li{display:flex;gap:11px;padding:5px 0;font-size:14.5px;align-items:baseline}
+.beats li+li{border-top:1px dotted var(--rule)}
+.beats .bt{font-family:var(--pc-mono);font-size:11.5px;color:var(--accent);min-width:38px;font-variant-numeric:tabular-nums}
+.why{font-size:14px;color:var(--ink-2);background:var(--sunk);border-radius:4px;padding:11px 13px;margin-top:4px}
+.why strong{color:var(--ink)}
+
+/* ── script view + status table ────────────────────────────────── */
+hr.d{border:0;border-top:1px solid var(--rule);margin:44px 0}
+h2.sec{font-size:clamp(23px,3.2vw,30px);margin:0 0 6px}
+.note{color:var(--ink-3);font-size:14px;max-width:62ch;margin:0 0 22px}
+.script{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:24px;box-shadow:var(--shadow)}
+.script .sl{display:flex;gap:14px;padding:7px 0;align-items:baseline}
+.script .sl+.sl{border-top:1px dotted var(--rule)}
+.script .at{font-family:var(--pc-mono);font-size:11.5px;color:var(--ink-3);min-width:44px;font-variant-numeric:tabular-nums}
+.script .txt{font-family:var(--pc-serif);font-size:17px;font-style:italic}
+.script .sl.gap .txt{font-style:normal;color:var(--ink-3);font-size:14.5px}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+.tw{overflow-x:auto;margin:20px 0}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--pc-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.m{font-family:var(--pc-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.hide-narr .narr,.hide-narr #script{display:none}
+#pc-offline{position:fixed;left:18px;bottom:18px;z-index:88;font-family:var(--pc-mono);font-size:11px;
+  color:var(--ink-3);background:var(--card);border:1px solid var(--rule);border-radius:100px;padding:8px 15px}
+
+@media (max-width:760px){.sc-body{grid-template-columns:1fr}.board{position:static;max-width:200px;margin:0 auto}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="ribbon"><div class="ribbon-in">
+  <span class="t" id="ribbonTitle"></span>
+  <nav class="strip" id="strip" aria-label="Jump to scene"></nav>
+  <button class="btn" id="toggleNarr" aria-pressed="false">Hide narration</button>
+</div></div>
+
+<div class="wrap">
+  <header id="masthead"></header>
+  <main id="board"></main>
+  <hr class="d">
+  <section id="script" class="script"></section>
+  <hr class="d">
+  <section><h2 class="sec">Where each scene stands</h2>
+    <p class="note">The honest state of the build, scene by scene.</p>
+    <div class="tw"><table id="status"></table></div>
+  </section>
+</div>
+
+<script src="plan.data.js"></script>
+<script src="plan.art.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   The renderer. Reads window.PLAN + window.PLAN_ART and builds the page.
+
+   window.renderPlan() must stay idempotent and re-runnable: the chat
+   rail calls it again after every accepted edit so the page updates in
+   place, without a reload and without losing your scroll position.
+   ═══════════════════════════════════════════════════════════════════ */
+const esc = s => String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+const el = id => document.getElementById(id);
+
+window.renderPlan = function renderPlan(){
+  const P = window.PLAN, ART = window.PLAN_ART || {};
+  const plateLabel = k => P.plates?.[k]?.label ?? k;
+
+  document.title = `${P.meta.title} — Storyboard`;
+  el('ribbonTitle').textContent = P.meta.title;
+
+  el('masthead').innerHTML = `
+    <p class="eyebrow">${esc(P.meta.eyebrow)}</p>
+    <h1>${esc(P.meta.title)}</h1>
+    <p class="deck">${P.meta.deck}</p>
+    <ul class="facts">${(P.meta.facts ?? []).map(f =>
+      `<li class="${f.hot ? 'hot' : ''}">${esc(f.text)}</li>`).join('')}</ul>`;
+
+  el('board').innerHTML = P.scenes.map((s, i) => {
+    const act = (P.acts ?? []).find(a => a.after === i);
+    const band = act ? `<div class="act"><h2>${esc(act.name)}</h2>
+      <span class="meta">${esc(act.time)}</span><p>${esc(act.note)}</p></div>` : '';
+    const art = typeof ART[s.id] === 'function' ? ART[s.id]() : '';
+    const narr = s.narr?.length
+      ? s.narr.map(n => `<div class="line"><span class="at">${esc(n[0])}</span>
+          <span class="txt">“${esc(n[1])}”</span></div>`).join('')
+      : `<div class="line"><span class="at">—</span><span class="txt">No narration. The picture carries this one.</span></div>`;
+    return `${band}
+      <article class="scene" id="s${s.n}" data-scene-id="${esc(s.id)}">
+        <div class="sc-head">
+          <span class="sc-no">Scene ${esc(s.n)}</span>
+          <span class="sc-title">${esc(s.title)}</span>
+          <span class="sc-tc">${esc(s.t)}&nbsp;·&nbsp;${esc(s.dur ?? '')}</span>
+          <span class="tag ${esc(s.plate)}">${esc(plateLabel(s.plate))}</span>
+          <span class="tag ${esc(s.status?.[0] ?? '')}">${esc(s.status?.[1] ?? '')}</span>
+        </div>
+        <div class="sc-body">
+          <div><div class="board"><div>${art}</div><div class="cap">${esc(s.artCap)}</div></div></div>
+          <div>
+            <div class="block"><p class="lbl">What the audience sees</p><p>${s.what}</p></div>
+            <div class="block"><p class="lbl">Narration</p>
+              <div class="narr ${s.silent ? 'silent' : ''}">${narr}</div></div>
+            <div class="block"><p class="lbl">Beats on the grid</p>
+              <ul class="beats">${(s.beats ?? []).map(b =>
+                `<li><span class="bt">${esc(b[0])}</span><span>${esc(b[1])}</span></li>`).join('')}</ul></div>
+            <div class="block"><p class="lbl">Why it earns its place</p><div class="why">${s.why}</div></div>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+
+  // Cell width tracks scene duration, so the strip reads as the film's
+  // rhythm rather than a row of equal tabs — a bloated act is visible in it.
+  const span = t => { const m = /(-?[\d.]+)\s*[\u2013\u2014-]\s*(-?[\d.]+)/.exec(String(t)); return m ? +m[2] - +m[1] : 1; };
+  el('strip').innerHTML = P.scenes.map(s =>
+    `<a class="${esc(s.plate)}" style="flex-grow:${span(s.t).toFixed(3)}" href="#s${s.n}"
+        title="Scene ${s.n} — ${esc(s.title)} (${esc(s.t)})"><span>${s.n}</span></a>`).join('');
+
+  const lines = P.scenes.flatMap(s => s.narr?.length
+    ? s.narr.map(n => `<div class="sl"><span class="at">${esc(n[0])}</span><span class="txt">“${esc(n[1])}”</span></div>`)
+    : [`<div class="sl gap"><span class="at">${esc(String(s.t).split(' ')[0])}</span><span class="txt">— scene ${s.n}: no narration —</span></div>`]);
+  el('script').innerHTML = `<h2 class="sec">Narration script</h2>
+    <p class="note">${lines.filter(l => !l.includes('gap')).length} lines across ${esc(P.meta.duration)} seconds.</p>${lines.join('')}`;
+
+  el('status').innerHTML = `<thead><tr><th>#</th><th>Scene</th><th>In – out</th><th>Register</th><th>State</th></tr></thead>
+    <tbody>${P.scenes.map(s => `<tr><td class="m">${s.n}</td><td>${esc(s.title)}</td>
+      <td class="m">${esc(s.t)}</td><td>${esc(plateLabel(s.plate))}</td>
+      <td>${esc(s.status?.[1] ?? '')}</td></tr>`).join('')}</tbody>`;
+};
+
+window.renderPlan();
+
+const tg = el('toggleNarr');
+tg.onclick = () => {
+  const on = tg.getAttribute('aria-pressed') === 'true';
+  tg.setAttribute('aria-pressed', String(!on));
+  document.body.classList.toggle('hide-narr', !on);
+  tg.textContent = !on ? 'Show narration' : 'Hide narration';
+};
+
+/* The chat rail exists only when the bridge is serving the page. Opened
+   straight off disk, the plan still reads perfectly — it just cannot be
+   talked to, and says so once, quietly, in the corner. */
+if (location.protocol.startsWith('http')) {
+  document.head.append(Object.assign(document.createElement('link'), { rel: 'stylesheet', href: '/__plan/chat.css' }));
+  document.body.append(Object.assign(document.createElement('script'), { src: '/__plan/chat.js', defer: true }));
+} else {
+  document.body.insertAdjacentHTML('beforeend',
+    '<div id="pc-offline">read-only · run plan.sh to edit by chat</div>');
+}
+</script>
+</body>
+</html>

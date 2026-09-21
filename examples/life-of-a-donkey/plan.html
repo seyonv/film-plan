@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Life of a Donkey — Storyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400&family=Archivo:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#FBF8F2; --card:#FFFFFF; --sunk:#F3EDE2;
+  --ink:#241C14; --ink-2:#5A4A39; --ink-3:#8D7B65;
+  --rule:rgba(36,28,20,.13); --rule-2:rgba(36,28,20,.26);
+  --accent:#9A6B1E; --amber:var(--accent); --amber-bg:rgba(154,107,30,.10);
+  --navy:#0B1230; --navy-2:#1B2758; --lav:#C8C1EF; --mint:#5FE0A8; --mag:#FF3D98;
+  --felt:#2F6B4F; --felt-2:#4C8E6C; --rail:#6B4A32;
+  --new:#6F3B7D; --new-bg:rgba(111,59,125,.10);
+  --keep:#2E6B4A; --keep-bg:rgba(46,107,74,.10);
+  --redo:#96631A; --redo-bg:rgba(150,99,26,.11);
+  --shadow:0 1px 2px rgba(36,28,20,.05),0 6px 18px rgba(36,28,20,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:Archivo,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.6;
+}
+h1,h2,h3,h4,.disp{font-family:Spectral,Georgia,serif;font-weight:600;line-height:1.16;text-wrap:balance}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:40px 110px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ── sticky ribbon ───────────────────────────── */
+.ribbon{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:40;
+  background:rgba(251,248,242,.93); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--rule); margin-inline:-20px; padding:10px 20px 11px;
+}
+.ribbon-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ribbon .t{font-family:Spectral,serif;font-weight:600;font-size:15px;white-space:nowrap}
+.strip{display:flex;gap:2px;flex:1 1 360px;min-width:260px}
+.strip a{
+  flex:1; height:22px; border-radius:2px; position:relative; display:block;
+  border:1px solid transparent; text-decoration:none;
+}
+.strip a.p{background:#E8D9B8}
+.strip a.b{background:#3B4A7A}
+.strip a:hover,.strip a:focus-visible{outline:2px solid var(--amber);outline-offset:1px}
+.strip a span{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-family:"IBM Plex Mono",monospace;font-size:9px;color:rgba(36,28,20,.55)
+}
+.strip a.b span{color:rgba(255,255,255,.72)}
+.btn{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
+  border:1px solid var(--rule-2); background:var(--card); color:var(--ink);
+  padding:6px 11px; border-radius:3px; cursor:pointer; white-space:nowrap;
+}
+.btn:hover{background:var(--sunk)} .btn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* ── masthead ────────────────────────────────── */
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3);margin:34px 0 10px}
+h1{font-size:clamp(32px,5.6vw,50px);margin:0 0 8px;letter-spacing:-.012em}
+.deck{font-family:Spectral,serif;font-size:clamp(17px,2.2vw,20px);color:var(--ink-2);max-width:60ch;margin:0 0 22px;line-height:1.5}
+.facts{display:flex;flex-wrap:wrap;gap:7px;padding:0;margin:0 0 34px;list-style:none}
+.facts li{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);background:var(--card);border:1px solid var(--rule);border-radius:3px;padding:5px 9px}
+.facts li.hot{color:var(--amber);border-color:var(--amber);background:var(--amber-bg)}
+
+hr.d{border:0;border-top:1px solid var(--rule);margin:44px 0}
+h2{font-size:clamp(23px,3.2vw,30px);margin:0 0 6px}
+.note{color:var(--ink-3);font-size:14px;max-width:62ch;margin:0 0 22px}
+p{max-width:64ch}
+
+/* ── act band ───────────────────────────────── */
+.act{margin:46px 0 22px;padding:16px 18px;background:var(--sunk);border-radius:4px;border-left:3px solid var(--amber)}
+.act h2{margin:0 0 3px;font-size:22px}
+.act .meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3)}
+.act p{margin:8px 0 0;font-size:14.5px;color:var(--ink-2)}
+
+/* ── scene card ─────────────────────────────── */
+.scene{
+  background:var(--card); border:1px solid var(--rule); border-radius:6px;
+  box-shadow:var(--shadow); margin:0 0 20px; overflow:hidden; scroll-margin-top:84px;
+}
+.sc-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid var(--rule);background:linear-gradient(var(--card),var(--card))}
+.sc-no{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:4px 9px;border-radius:3px;white-space:nowrap
+}
+.sc-title{font-family:Spectral,serif;font-weight:600;font-size:20px;flex:1 1 220px;min-width:0}
+.sc-tc{font-family:"IBM Plex Mono",monospace;font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;border-radius:3px;border:1px solid;white-space:nowrap}
+.tag.p{color:#8A6420;border-color:#C9A86A;background:#FBF3E2}
+.tag.b{color:#2F4577;border-color:#8FA8DE;background:#EEF2FB}
+.tag.new{color:var(--new);border-color:var(--new);background:var(--new-bg)}
+.tag.keep{color:var(--keep);border-color:var(--keep);background:var(--keep-bg)}
+.tag.redo{color:var(--redo);border-color:var(--redo);background:var(--redo-bg)}
+
+.sc-body{display:grid;grid-template-columns:186px 1fr;gap:20px;padding:18px}
+.board{position:sticky;top:96px}
+.board svg{width:100%;height:auto;display:block;border-radius:3px;border:1px solid var(--rule-2)}
+.board .cap{font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);margin-top:7px;text-align:center;line-height:1.45}
+
+.lbl{font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 7px}
+.block{margin:0 0 18px}
+.block:last-child{margin-bottom:0}
+.block p{margin:0}
+
+/* narration */
+.narr{background:var(--sunk);border-radius:4px;padding:13px 15px;border-left:2px solid var(--amber)}
+.narr .line{display:flex;gap:11px;align-items:baseline;padding:4px 0}
+.narr .line+.line{border-top:1px dotted var(--rule)}
+.narr .at{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-3);min-width:38px;font-variant-numeric:tabular-nums}
+.narr .txt{font-family:Spectral,serif;font-size:16.5px;font-style:italic;color:var(--ink)}
+.narr.silent .txt{font-style:normal;color:var(--ink-3);font-size:15px}
+
+/* beat list */
+.beats{list-style:none;margin:0;padding:0}
+.beats li{display:flex;gap:11px;padding:5px 0;font-size:14.5px;align-items:baseline}
+.beats li+li{border-top:1px dotted var(--rule)}
+.beats .bt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--amber);min-width:38px;font-variant-numeric:tabular-nums}
+
+.reads{display:flex;gap:7px;flex-wrap:wrap;margin-top:4px}
+.reads b{font-family:"IBM Plex Mono",monospace;font-size:10.5px;font-weight:500;padding:4px 8px;border-radius:3px;background:var(--keep-bg);color:var(--keep);border:1px solid var(--keep)}
+
+.why{font-size:14px;color:var(--ink-2);background:var(--sunk);border-radius:4px;padding:11px 13px;margin-top:12px}
+.why strong{color:var(--ink)}
+
+/* script view */
+.script{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:24px;box-shadow:var(--shadow)}
+.script h3{margin:0 0 4px;font-size:20px}
+.script .sl{display:flex;gap:14px;padding:7px 0;align-items:baseline}
+.script .sl+.sl{border-top:1px dotted var(--rule)}
+.script .at{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--ink-3);min-width:44px;font-variant-numeric:tabular-nums}
+.script .txt{font-family:Spectral,serif;font-size:17px;font-style:italic}
+.script .sl.gap .txt{font-style:normal;color:var(--ink-3);font-size:14.5px}
+
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+.tw{overflow-x:auto;margin:20px 0}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+td.m{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.callout{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:20px 22px;margin:20px 0;box-shadow:var(--shadow)}
+.callout h3{margin:0 0 9px;font-size:19px}
+.callout p:last-child{margin-bottom:0}
+em.t{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:.92em;color:var(--amber)}
+
+.hide-narr .narr,.hide-narr .script{display:none}
+
+@media (max-width:760px){
+  .sc-body{grid-template-columns:1fr}
+  .board{position:static;max-width:200px;margin:0 auto}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <div class="ribbon-in">
+    <span class="t">Life of a Donkey</span>
+    <nav class="strip" id="strip" aria-label="Jump to scene"></nav>
+    <button class="btn" id="toggleNarr" aria-pressed="false">Hide narration</button>
+  </div>
+</div>
+
+<div class="wrap" id="wrap">
+
+  <header id="masthead"></header>
+
+  <div class="callout">
+    <h3>The voice</h3>
+    <p>
+      One narrator, present tense, never hurried, faintly fond of the animal he is describing. He opens
+      on <em class="t">“The classic Texas donkey.”</em> and never once acknowledges that any of this is
+      a joke — which is precisely what makes it one.
+    </p>
+    <p style="margin-top:12px">
+      <strong>The narration also carries time</strong>, and that turned out to be the most valuable thing
+      it does. <em class="t">His first night</em> → <em class="t">Within a month</em> →
+      <em class="t">By spring</em> → <em class="t">A year later</em>. Four phrases, and the film stops
+      reading as one bad session and starts reading as a life. Nothing else I tried solved that as
+      cheaply.
+    </p>
+  </div>
+
+  <hr class="d">
+
+  <h2>The story in one pass</h2>
+  <p>
+    A donkey sits down at a $1/$2 table. The film treats him as a specimen and follows him through the
+    five developmental stages every losing player passes through. He begins as a <strong>Fish</strong>
+    who does not know which hands to fold, becomes a <strong>Calling Station</strong> who cannot fold at
+    all, and matures into the <strong>Donk</strong> the film is named for. There he makes the worst play
+    in the film, is called correctly by someone who knows better, and wins anyway on a 1.4% miracle.
+    That single win destroys him: it turns him into a <strong>Maniac</strong> who shoves everything, and
+    the Maniac busts down to a <strong>Nit</strong> — the adult form, and the saddest. Then the film
+    pulls back: every chip he has lost has fed someone else at that table. He is the primary producer.
+    The ring closes, and it begins again on Tuesday.
+  </p>
+
+  <div class="tw">
+    <table>
+      <thead><tr><th>Act</th><th>Time</th><th>Scenes</th><th>What it does</th></tr></thead>
+      <tbody>
+        <tr><td><strong>I — The specimen</strong></td><td class="m">0.0 – 6.0</td><td class="m">1–2</td><td>Sets the format, the subject, and the narrator's voice</td></tr>
+        <tr><td><strong>II — Early instars</strong></td><td class="m">6.0 – 18.0</td><td class="m">3–6</td><td>Fish and Calling Station. The table frame is established</td></tr>
+        <tr><td><strong>III — The donk &amp; the hand</strong></td><td class="m">18.0 – 32.5</td><td class="m">7–11</td><td>The act the species is named for, and the suckout</td></tr>
+        <tr><td><strong>IV — Late instars &amp; reframe</strong></td><td class="m">32.5 – 48.0</td><td class="m">12–16</td><td>Maniac, Nit, primary producer, the loop</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <hr class="d">
+  <h2 id="scenes">The scenes</h2>
+  <p class="note">
+    Each card shows the composition, the beats on the grid, and the narration over it. Sticky frames on
+    the left — scroll a card and the picture stays with you.
+  </p>
+
+  <div id="board"></div>
+
+  <hr class="d">
+  <h2>The script, end to end</h2>
+  <p class="note">The narration alone, in order. This is the fastest way to judge whether the voice holds.</p>
+  <div class="script" id="script"></div>
+
+  <hr class="d">
+  <h2>What still worries me</h2>
+  <div class="callout">
+    <h3>Three things I'd watch</h3>
+    <p>
+      <strong>The voice going smug.</strong> Seventeen lines is a lot, and the register only works while
+      it stays clinical and slightly sad. <em class="t">he believes he is due</em> and
+      <em class="t">he will be back on Tuesday</em> are each one degree from a wink. They're the best
+      lines in the script and the first two I'd cut if the tone slips.
+    </p>
+    <p style="margin-top:12px">
+      <strong>The silence at the river.</strong> The narrator says nothing across scene 11 — after
+      twenty-nine seconds of talking, that gap is the loudest thing in the film. It only works if he has
+      genuinely been present throughout; if the script thins out earlier, the silence stops registering.
+    </p>
+    <p style="margin-top:12px">
+      <strong>Caption legibility at phone size.</strong> Lowercase, thin, letter-spaced type reads
+      beautifully at full resolution and can vanish at 0.3 scale over a busy paper plate. Every caption
+      needs a tested contrast treatment before I call any scene done.
+    </p>
+  </div>
+
+  <h2 style="margin-top:44px">Build order</h2>
+  <div class="tw">
+    <table>
+      <thead><tr><th>#</th><th>Work</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td class="m">1</td><td>Timeline to 48 s; caption system in the shared library</td><td>Everything downstream needs both</td></tr>
+        <tr><td class="m">2</td><td>The five stage scenes — one agent, one locked frame</td><td>The spine; nothing works if the repeat drifts</td></tr>
+        <tr><td class="m">3</td><td>Captions onto the ten existing scenes</td><td>Highest leverage per hour in the project</td></tr>
+        <tr><td class="m">4</td><td>Stage-marker plate; five-stage ring on the taxonomy plate</td><td>Makes the count legible</td></tr>
+        <tr><td class="m">5</td><td>Re-score against the new structure</td><td>Picture settles first</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="color:var(--ink-3);font-size:13px;margin-top:38px;border-top:1px solid var(--rule);padding-top:16px">
+    Nothing is built against this plan yet. 11 of 16 scenes exist from the previous 36-second cut and are
+    reusable with re-timing; 5 are stubs. The rendered 36-second film remains on disk, untouched.
+  </p>
+</div>
+
+<script src="plan.data.js"></script>
+<script src="plan.art.js"></script>
+<script>
+/* ────────────────────────────────────────────────────────────
+   The renderer. Reads window.PLAN (plan.data.js) and
+   window.PLAN_ART (plan.art.js) and builds the page.
+
+   renderPlan() is idempotent and re-runnable: the chat rail
+   calls it again after every accepted edit, so the plan updates
+   in place without a reload and without losing your place.
+   ──────────────────────────────────────────────────────────── */
+window.renderPlan = function renderPlan(){
+const PLAN=window.PLAN, ART=window.PLAN_ART||{};
+const SCENES=PLAN.scenes, ACTS=PLAN.acts||[];
+const label=k=>PLAN.plates?.[k]?.label??k;
+
+/* masthead */
+document.getElementById('masthead').innerHTML=`
+  <p class="eyebrow">${PLAN.meta.eyebrow}</p>
+  <h1>${PLAN.meta.title}</h1>
+  <p class="deck">${PLAN.meta.deck}</p>
+  <ul class="facts">${(PLAN.meta.facts||[]).map(f=>
+    `<li class="${f.hot?'hot':''}">${f.text}</li>`).join('')}</ul>`;
+
+/* scenes */
+const board=document.getElementById('board');
+let html='';
+SCENES.forEach((s,i)=>{
+  const act=ACTS.find(a=>a.after===i);
+  if(act) html+=`<div class="act"><h2>${act.name}</h2><span class="meta">${act.time}</span><p>${act.note}</p></div>`;
+  const art=typeof ART[s.id]==='function'?ART[s.id]():'';
+  html+=`<article class="scene" id="s${s.n}" data-scene-id="${s.id}">
+    <div class="sc-head">
+      <span class="sc-no">Scene ${s.n}</span>
+      <span class="sc-title">${s.title}</span>
+      <span class="sc-tc">${s.t}&nbsp;·&nbsp;${s.dur}</span>
+      <span class="tag ${s.plate}">${label(s.plate)}</span>
+      <span class="tag ${s.status[0]}">${s.status[1]}</span>
+    </div>
+    <div class="sc-body">
+      <div><div class="board"><div>${art}</div><div class="cap">${s.artCap}</div></div></div>
+      <div>
+        <div class="block"><p class="lbl">What the audience sees</p><p>${s.what}</p></div>
+        <div class="block"><p class="lbl">Narration</p>
+          <div class="narr ${s.silent?'silent':''}">
+            ${s.narr.length?s.narr.map(n=>`<div class="line"><span class="at">${n[0]}</span><span class="txt">${n[0]==='—'?n[1]:'“'+n[1]+'”'}</span></div>`).join('')
+              :`<div class="line"><span class="at">—</span><span class="txt" style="font-style:normal;color:var(--ink-3);font-size:15px">No narration. The picture carries this one.</span></div>`}
+          </div>
+        </div>
+        <div class="block"><p class="lbl">Beats on the grid</p>
+          <ul class="beats">${s.beats.map(b=>`<li><span class="bt">${b[0]}</span><span>${b[1]}</span></li>`).join('')}</ul>
+        </div>
+        <div class="block"><p class="lbl">Reads for</p>
+          <div class="reads"><b>Poker players</b><b>General viewers</b></div>
+          <div class="why">${s.why}</div>
+        </div>
+      </div>
+    </div>
+  </article>`;
+});
+board.innerHTML=html;
+
+/* ribbon strip — cell width tracks scene duration, so the strip
+   reads as the film's rhythm rather than a row of equal tabs */
+const span=t=>{const m=/(-?[\d.]+)\s*[–—-]\s*(-?[\d.]+)/.exec(String(t));return m?+m[2]-+m[1]:1;};
+document.getElementById('strip').innerHTML=SCENES.map(s=>
+  `<a class="${s.plate}" style="flex-grow:${span(s.t).toFixed(3)}" href="#s${s.n}" title="Scene ${s.n} — ${s.title} (${s.t})"><span>${s.n}</span></a>`).join('');
+
+/* full script */
+let sc=`<h3>Narration script</h3><p class="note">The narration alone, in order, across ${PLAN.meta.duration} seconds.</p>`;
+SCENES.forEach(s=>{
+  if(!s.narr.length){ sc+=`<div class="sl gap"><span class="at">${String(s.t).split(' ')[0]}</span><span class="txt">— scene ${s.n}: no narration —</span></div>`; return; }
+  s.narr.forEach(n=>{
+    if(n[0]==='—'){ sc+=`<div class="sl gap"><span class="at">29.0</span><span class="txt">— ${n[1]} —</span></div>`; }
+    else sc+=`<div class="sl"><span class="at">${n[0]}</span><span class="txt">“${n[1]}”</span></div>`;
+  });
+});
+document.getElementById('script').innerHTML=sc;
+};
+
+window.renderPlan();
+
+/* narration toggle */
+const tg=document.getElementById('toggleNarr');
+tg.addEventListener('click',()=>{
+  const on=tg.getAttribute('aria-pressed')==='true';
+  tg.setAttribute('aria-pressed',String(!on));
+  document.body.classList.toggle('hide-narr',!on);
+  tg.textContent=!on?'Show narration':'Hide narration';
+});
+
+/* The chat rail exists only when the bridge is serving the page.
+   Opened off disk the plan still reads perfectly — it just cannot
+   be talked to, and says so once, quietly, in the corner. */
+if(location.protocol.startsWith('http')){
+  document.head.append(Object.assign(document.createElement('link'),{rel:'stylesheet',href:'/__plan/chat.css'}));
+  document.body.append(Object.assign(document.createElement('script'),{src:'/__plan/chat.js',defer:true}));
+}else{
+  document.body.insertAdjacentHTML('beforeend',
+    '<div style="position:fixed;left:18px;bottom:18px;font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:var(--ink-3);background:var(--card);border:1px solid var(--rule);border-radius:100px;padding:8px 15px">read-only · run docs/plan.sh to edit by chat</div>');
+}
+</script>
+</body>
+</html>

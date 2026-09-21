@@ -1,0 +1,12 @@
+{
+  "name": "film-plan",
+  "version": "1.0.0",
+  "description": "Plan a film as a page instead of a document. Builds a scene-by-scene storyboard with drawn frames, narration and timing, and attaches a chat rail that edits the plan by talking to it — every change validated, committed and undoable.",
+  "author": {
+    "name": "Seyon Vasantharajan"
+  },
+  "homepage": "https://github.com/seyonv/film-plan",
+  "repository": "https://github.com/seyonv/film-plan",
+  "license": "MIT",
+  "keywords": ["film", "storyboard", "video", "plan", "shot-list", "animatic", "treatment"]
+}

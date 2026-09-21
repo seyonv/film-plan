@@ -1,0 +1,5 @@
+.DS_Store
+.plan-chat/snapshots/
+.plan-chat/turns/
+.plan-chat/session-id
+plan.shared.html

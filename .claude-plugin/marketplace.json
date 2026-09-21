@@ -1,0 +1,15 @@
+{
+  "name": "film-plan",
+  "owner": { "name": "Seyon Vasantharajan" },
+  "metadata": {
+    "description": "Film Plan — a film is a thing that happens over time, and a document cannot show you that. Plan it as a page you can talk to."
+  },
+  "plugins": [
+    {
+      "name": "film-plan",
+      "source": "./",
+      "description": "Plan a film as a page instead of a document. Builds a scene-by-scene storyboard with drawn frames, narration and timing, and attaches a chat rail that edits the plan by talking to it — every change validated, committed and undoable.",
+      "license": "MIT"
+    }
+  ]
+}

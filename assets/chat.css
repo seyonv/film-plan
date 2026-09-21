@@ -1,0 +1,212 @@
+/* ───────────────────────────────────────────────────────────────────
+   chat.css — the plan chat rail.
+
+   Aesthetic-agnostic. Every colour comes from the host page's token
+   contract, and every one has a fallback, so this drops onto warm paper
+   stock or cold neon without edits:
+
+     --paper --card --sunk --ink --ink-2 --ink-3 --rule --accent
+
+   Nothing here is ever modal. The page stays readable while it works.
+   ─────────────────────────────────────────────────────────────────── */
+#pc, #pc * { box-sizing: border-box; }
+#pc {
+  --pc-paper: var(--paper, #fff);
+  --pc-card:  var(--card, #fff);
+  --pc-sunk:  var(--sunk, rgba(128,128,128,.08));
+  --pc-ink:   var(--ink, #1a1a1a);
+  --pc-ink2:  var(--ink-2, #4a4a4a);
+  --pc-ink3:  var(--ink-3, #8a8a8a);
+  --pc-rule:  var(--rule, rgba(128,128,128,.24));
+  --pc-acc:   var(--accent, var(--amber, #9A6B1E));
+  --pc-w: 384px;
+  position: fixed; inset-block: 0; right: 0; z-index: 90;
+  display: flex; align-items: stretch;
+  font-family: var(--pc-sans, system-ui, sans-serif);
+  font-size: 14px; line-height: 1.55; color: var(--pc-ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  #pc-panel { transition: transform .26s cubic-bezier(.22,.61,.36,1); }
+}
+
+/* ── the slim tab you grab ─────────────────────────────────────── */
+#pc-tab {
+  align-self: center; writing-mode: vertical-rl; transform: rotate(180deg);
+  background: var(--pc-card); color: var(--pc-ink-2, var(--pc-ink2));
+  border: 1px solid var(--pc-rule); border-right: 0;
+  border-radius: 4px 0 0 4px; padding: 15px 7px; cursor: pointer;
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10.5px; letter-spacing: .15em; text-transform: uppercase;
+  box-shadow: -2px 0 12px rgba(0,0,0,.06);
+}
+#pc-tab:hover { background: var(--pc-sunk); }
+#pc-tab .dot {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pc-acc); margin-block-end: 8px; opacity: 0;
+}
+#pc[data-unread="1"] #pc-tab .dot { opacity: 1; }
+
+/* ── panel ─────────────────────────────────────────────────────── */
+#pc-panel {
+  width: var(--pc-w); max-width: 92vw; display: flex; flex-direction: column;
+  background: var(--pc-paper); border-left: 1px solid var(--pc-rule);
+  box-shadow: -8px 0 32px rgba(0,0,0,.08);
+}
+#pc[data-open="0"] #pc-panel { transform: translateX(100%); width: 0; border: 0; box-shadow: none; }
+#pc[data-open="0"] #pc-panel > * { display: none; }
+
+#pc-head {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 13px 16px; border-bottom: 1px solid var(--pc-rule);
+}
+#pc-head h2 {
+  margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .02em;
+  font-family: var(--pc-serif, var(--pc-sans, system-ui));
+}
+#pc-head .sub {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--pc-ink3); margin-inline-start: auto;
+}
+#pc-close {
+  background: none; border: 0; color: var(--pc-ink3); cursor: pointer;
+  font-size: 17px; line-height: 1; padding: 0 2px;
+}
+#pc-close:hover { color: var(--pc-ink); }
+
+#pc-tabs { display: flex; border-bottom: 1px solid var(--pc-rule); }
+#pc-tabs button {
+  flex: 1; background: none; border: 0; border-bottom: 2px solid transparent;
+  padding: 9px 0; cursor: pointer; color: var(--pc-ink3);
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+}
+#pc-tabs button[aria-selected="true"] { color: var(--pc-ink); border-bottom-color: var(--pc-acc); }
+
+#pc-body { flex: 1; overflow-y: auto; overscroll-behavior: contain; }
+#pc-log, #pc-changes { padding: 14px 16px; display: none; }
+#pc-body[data-view="log"] #pc-log,
+#pc-body[data-view="changes"] #pc-changes { display: block; }
+
+/* ── messages ──────────────────────────────────────────────────── */
+.pc-msg { margin-block-end: 14px; }
+.pc-msg .who {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--pc-ink3); margin-block-end: 4px;
+}
+.pc-msg.user .bubble {
+  background: var(--pc-sunk); border-radius: 4px; padding: 9px 11px;
+  border-inline-start: 2px solid var(--pc-rule);
+}
+.pc-msg.plan .bubble { padding-inline-start: 2px; }
+.pc-msg.err .bubble {
+  background: var(--pc-sunk); border-inline-start: 2px solid var(--pc-acc);
+  border-radius: 4px; padding: 9px 11px;
+}
+.pc-msg .detail {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 11px; color: var(--pc-ink3); margin-block-start: 6px;
+  white-space: pre-wrap; word-break: break-word;
+}
+.pc-msg ul.pc-changes-list { margin: 7px 0 0; padding: 0; list-style: none; }
+.pc-msg ul.pc-changes-list li {
+  font-size: 12.5px; color: var(--pc-ink2); padding: 3px 0;
+  border-block-start: 1px dotted var(--pc-rule);
+}
+.pc-msg ul.pc-changes-list b {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--pc-acc); font-weight: 500; margin-inline-end: 6px;
+}
+
+/* ── the working line — quiet, inline, never blocks ────────────── */
+#pc-working { display: none; align-items: center; gap: 8px; padding: 2px 0 10px; }
+#pc[data-busy="1"] #pc-working { display: flex; }
+.pc-spin {
+  width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto;
+  background: var(--pc-acc); animation: pc-pulse 1.25s ease-in-out infinite;
+}
+#pc-working .what {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 11px; color: var(--pc-ink3);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+@keyframes pc-pulse { 0%,100% { opacity: .25; transform: scale(.72); } 50% { opacity: 1; transform: scale(1); } }
+
+/* ── composer ──────────────────────────────────────────────────── */
+#pc-form { border-block-start: 1px solid var(--pc-rule); padding: 11px 12px 12px; background: var(--pc-card); }
+#pc-input {
+  width: 100%; resize: none; min-height: 62px; max-height: 190px;
+  background: var(--pc-paper); color: var(--pc-ink);
+  border: 1px solid var(--pc-rule); border-radius: 4px; padding: 9px 10px;
+  font: inherit; font-size: 13.5px;
+}
+#pc-input:focus-visible { outline: 2px solid var(--pc-acc); outline-offset: -1px; border-color: transparent; }
+#pc-foot { display: flex; align-items: center; gap: 9px; margin-block-start: 8px; }
+#pc-hint {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10px; color: var(--pc-ink3); margin-inline-end: auto;
+}
+#pc-send {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase;
+  background: var(--pc-ink); color: var(--pc-paper); border: 1px solid var(--pc-ink);
+  border-radius: 3px; padding: 7px 13px; cursor: pointer;
+}
+#pc-send:disabled { opacity: .4; cursor: default; }
+
+/* ── changelog ─────────────────────────────────────────────────── */
+.pc-entry { padding: 11px 0; border-block-end: 1px solid var(--pc-rule); }
+.pc-entry .when {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--pc-ink3);
+}
+.pc-entry .sum { margin: 3px 0 5px; font-size: 13px; }
+.pc-entry button {
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  background: none; border: 1px solid var(--pc-rule); border-radius: 3px;
+  color: var(--pc-ink3); padding: 3px 8px; cursor: pointer;
+}
+.pc-entry button:hover { color: var(--pc-ink); border-color: var(--pc-ink); }
+.pc-empty { color: var(--pc-ink3); font-size: 13px; }
+
+/* ── corner status pill — lives outside the rail ───────────────── */
+#pc-pill {
+  position: fixed; left: 18px; bottom: 18px; z-index: 88;
+  display: none; align-items: center; gap: 9px;
+  max-width: min(440px, calc(100vw - 36px));
+  background: var(--card, #fff); color: var(--ink-2, #444);
+  border: 1px solid var(--rule, rgba(128,128,128,.24)); border-radius: 100px;
+  padding: 8px 15px 8px 13px; cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,.04), 0 10px 28px rgba(0,0,0,.09);
+  font-family: var(--pc-mono, ui-monospace, monospace); font-size: 11.5px;
+}
+#pc-pill[data-show="1"] { display: flex; }
+#pc-pill .what { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#pc-pill[data-kind="done"] .pc-spin { animation: none; background: var(--keep, #2E6B4A); }
+#pc-pill[data-kind="failed"] .pc-spin { animation: none; background: var(--redo, #96631A); }
+@media (prefers-reduced-motion: reduce) { .pc-spin { animation: none !important; } }
+
+/* ── a changed scene, marked on the page itself ────────────────── */
+[data-pc-changed] {
+  outline: 2px solid var(--accent, var(--amber, #9A6B1E));
+  outline-offset: 3px; border-radius: 6px;
+}
+[data-pc-changed]::after {
+  content: "changed just now";
+  position: absolute; inset-block-start: -9px; inset-inline-end: 12px;
+  background: var(--accent, var(--amber, #9A6B1E)); color: var(--paper, #fff);
+  font-family: var(--pc-mono, ui-monospace, monospace);
+  font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 2px;
+}
+[data-pc-changed] { position: relative; }
+
+/* ── narrow screens: the rail becomes a sheet ──────────────────── */
+@media (max-width: 720px) {
+  #pc { --pc-w: 100vw; }
+  #pc-panel { box-shadow: none; }
+  #pc[data-open="1"] #pc-tab { display: none; }
+}
