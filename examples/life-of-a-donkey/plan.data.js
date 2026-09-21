@@ -132,7 +132,7 @@ window.PLAN = {
  what:'Same frame. <b>The won pot is still sliding toward him as the scene opens</b>, and his first shove comes out of that same arriving pile. He pushes the whole tower in, and again, chips scattering. Reared, ears flat back. Headphones gone, coat rough. By the last frame the stack is empty.',
  beats:[['34.0','The won pot is still sliding toward him'],['34.9','First shove — out of the arriving pile'],['36.1','Second shove — chips scatter across the felt'],['37.2','The stack is empty']],
  narr:[['34.4','One win. It is sufficient.'],['35.6','The fourth instar. The maniac.'],['36.6','He believes, now, that he is due.']],
- why:'<em class="t">One win. It is sufficient.</em> states the causality the picture can only imply. <strong>It is the sentence that makes the plot a plot instead of a sequence.</strong>'},
+ why:'<strong>The only stage the hand causes.</strong> Fish, calling station and donk arrive with the calendar — first night, a month, spring; the maniac is made by the suckout. Cut it and the whole of Act III is an anecdote with no consequence. It is also the loudest frame in the film, and the hardest cut in the film needs something this loud to cut away from.'},
 
 {n:14,id:'stage-nit',t:'37.5 – 41.5',dur:'4.0 s',plate:'p',status:['new','new'],
  title:'V. Nit',
@@ -140,7 +140,7 @@ window.PLAN = {
  what:'The same frame, and <b>the hardest cut in the film lands on it</b>: identical composition, everything changed. Four chips. He slides his cards away and folds, then does not move while every other hand plays around him. Hunched, drawn back, ears neutral. Drink empty. <b>The aviators are off — his eyes, for the first and only time.</b>',
  beats:[['37.5','CUT — identical frame, 31 chips → 4, chaos → stillness'],['39.5','He slides his cards away. Folds.'],['39.5–41.5','Nothing. He does not move.']],
  narr:[['37.9','A year later. The adult form.'],['39.2','The nit. He folds everything.'],['40.3','He has learned, at last, what it costs to be wrong.']],
- why:'<strong>The taxonomy joke in five words</strong> — the terminal stage is not the most fearsome but the most diminished — arriving exactly as we see his eyes for the only time in the film.'},
+ why:'<strong>Scene 3, inverted, in the same frame.</strong> The fish was the one hand that would not withdraw; the nit is the one hand that will not play. That rhyme is what closes five stages into a life. And it buys <em class="t">And yet.</em> — the film has to stop laughing at him for four seconds, and see his eyes, before the reframe can turn tender.'},
 
 {n:15,id:'the-ecosystem',t:'41.5 – 46.0',dur:'4.5 s',plate:'p',status:['keep','built · retime 3.0 → 4.5 s · captions'],
  title:'Primary producer',
